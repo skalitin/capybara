@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.ServiceProcess;
 
 namespace Capybara
 {
@@ -6,7 +6,8 @@ namespace Capybara
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Run as service please...");
+            var servicesToRun = new ServiceBase[] { new Service()  };
+            ServiceBase.Run(servicesToRun);
         }
     }
 }
