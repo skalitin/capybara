@@ -24,7 +24,6 @@ namespace Capybara
 
         public void Watch()
         {
-            ProcessProjects();
             Repeat.Interval(Configuration.PollingInterval, ProcessProjects, _cancellationTokenSource.Token);
         }
 
