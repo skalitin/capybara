@@ -4,16 +4,18 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using Newtonsoft.Json;
 using NLog;
 using Task = System.Threading.Tasks.Task;
 
 namespace Capybara
 {
-    public class Watcher
+    public class Watcher 
     {
         private Mailer _mailer;
         private static Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         public Watcher()
         {
@@ -23,7 +25,13 @@ namespace Capybara
         public void Watch()
         {
             ProcessProjects();
-            Repeat.Interval(Configuration.PollingInterval, ProcessProjects);
+            Repeat.Interval(Configuration.PollingInterval, ProcessProjects, _cancellationTokenSource.Token);
+        }
+
+        public void Stop()
+        {
+            Logger.Info("Stopping...");
+            _cancellationTokenSource.Cancel();
         }
 
         private ICollection<TeamMember> GetTeamMembers(string project)

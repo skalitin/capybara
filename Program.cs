@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NLog;
 
 namespace Capybara
 {
@@ -10,8 +6,7 @@ namespace Capybara
     {
         static void Main(string[] args)
         {
-            new Watcher().Watch();
-            Console.ReadLine();
+            Console.WriteLine("Run as service please...");
         }
     }
 }
